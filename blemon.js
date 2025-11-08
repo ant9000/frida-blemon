@@ -20,7 +20,7 @@ rpc.exports = {
         };
 
         Java.perform(function () {
-            var retries = 6;
+            var retries = 60;
 
             function hookBLE() {
                 var className = "";
@@ -57,8 +57,8 @@ rpc.exports = {
                     console.log("[hooked]", className);
                 } else {
                     if (retries--) {
-                        console.log("Info: cannot find (unique) hooking class - retrying in 10 seconds.");
-                        setTimeout(hookBLE, 10000);
+                        console.log("Info: cannot find (unique) hooking class - retrying.");
+                        setTimeout(hookBLE, 1000);
                     } else {
                         console.log("Error: cannot find (unique) hooking class - aborting.");
                         console.log(JSON.stringify(lookup, null, 2));
@@ -68,7 +68,7 @@ rpc.exports = {
                 return;
             };
 
-            setTimeout(hookBLE, 10000);
+            hookBLE();
         });
     }
 };
