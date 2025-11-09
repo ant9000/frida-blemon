@@ -81,6 +81,18 @@ For instance, here are the logs for turning the LEDs on and off respectively:
 [BLE Write  =>] UUID: 0000fff3-0000-1000-8000-00805f9b34fb data: 0xbc01010055
 ```
 
+You can also inject a modified version of the blemon.js script inside your app,
+in order to log messages directly into Android `logcat` - without the need for
+a PC and a Frida debugger connected. It's only a tad more work:
+
+```
+frida-create -t agent
+npm install frida-java-bridge
+frida-compile -o _blemon_standalone.js blemon_standalone.js
+frida-gadget --apktool-path "java -jar apktool_2.12.1.jar" --js _blemon_standalone.js --sign mrstar_merged.apk
+adb install mrstar_merged/dist/mrstar_merged-aligned-debugSigned.apk
+```
+
 # LINKS
 
 - APKEditor - we use it for merging split APK
